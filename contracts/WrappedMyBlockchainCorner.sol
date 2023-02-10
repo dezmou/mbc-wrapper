@@ -2,9 +2,12 @@
 pragma solidity ^0.8.9;
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+import "erc721a/contracts/ERC721A.sol";
 import "./MyBlockchainCorner.sol";
 
-contract WrappedMyBlockchainCorner {
+contract WrappedMyBlockchainCorner is ERC721A, Ownable {
     MyBlockchainCorner originalMBC =
         MyBlockchainCorner(0x8C051C68D9601771CE96d4c9e971985aeDE480f7);
 
@@ -32,5 +35,7 @@ contract WrappedMyBlockchainCorner {
         originalMBC.setPrice(page, x, y, price);
     }
 
-    constructor() {}
+    constructor()
+        ERC721A("Wrapped MyBlockchainCorner", "MBC")
+     {}
 }
