@@ -14,8 +14,8 @@ contract WrappedMyBlockchainCorner {
         uint256 price;
     }
 
-    function wrap(uint256 page, uint32 x, uint32 y) public payable {
-        originalMBC.buyTile{value : msg.value}(page, x, y, "");
+    function wrap(uint256 page, uint32 x, uint32 y, string calldata html) public payable {
+        originalMBC.buyTile{value : msg.value}(page, x, y, html);
     }
 
     function setHtml(
