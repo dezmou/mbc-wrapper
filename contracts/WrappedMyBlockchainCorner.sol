@@ -5,7 +5,8 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "./MyBlockchainCorner.sol";
 
 contract WrappedMyBlockchainCorner {
-    MyBlockchainCorner originalMBC = MyBlockchainCorner(0x8C051C68D9601771CE96d4c9e971985aeDE480f7);
+    MyBlockchainCorner originalMBC =
+        MyBlockchainCorner(0x8C051C68D9601771CE96d4c9e971985aeDE480f7);
 
     struct Tile {
         address owner;
@@ -13,14 +14,13 @@ contract WrappedMyBlockchainCorner {
         uint256 price;
     }
 
-    function wrap(uint256 page, uint32 x, uint32 y) public {
-        originalMBC.buyTile(page,x,y, "");
+    function wrap(uint256 page, uint32 x, uint32 y) public payable {
+        originalMBC.buyTile{value : msg.value}(page, x, y, "");
     }
 
     function unWrap(uint256 page, uint32 x, uint32 y, uint256 price) public {
         originalMBC.setPrice(page, x, y, price);
     }
 
-    constructor() {
-    }
+    constructor() {}
 }
