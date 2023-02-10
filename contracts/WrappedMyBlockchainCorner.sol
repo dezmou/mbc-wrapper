@@ -5,9 +5,15 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "./MyBlockchainCorner.sol";
 
-contract WrappedMyBlockchainCorner is ERC721, ERC721Burnable, Ownable {
+contract WrappedMyBlockchainCorner is
+    ERC721,
+    ERC721Burnable,
+    Ownable,
+    ReentrancyGuard
+{
     MyBlockchainCorner originalMBC =
         MyBlockchainCorner(0x8C051C68D9601771CE96d4c9e971985aeDE480f7);
 
@@ -19,6 +25,14 @@ contract WrappedMyBlockchainCorner is ERC721, ERC721Burnable, Ownable {
 
     mapping(uint256 => uint256[3]) public tokenIdToCoordinate;
     mapping(uint256 => uint256[4][4]) public coordinateToTokenID;
+
+    struct UnwrappedPendingTile {
+        address owner;
+        uint256 price;
+        uint256 mbc_rake_percent;
+    }
+    mapping(uint256 => UnwrappedPendingTile[4][4])
+        private unwrappedPendingTiles;
 
     /**
      * ERC721 tokenID must be an uint256 but MBC tile identifier is using 3 integers.
@@ -47,9 +61,18 @@ contract WrappedMyBlockchainCorner is ERC721, ERC721Burnable, Ownable {
     ) public payable {
         originalMBC.buyTile{value: msg.value}(page, x, y, html);
         uint256 tokenId = getTokenId(page, x, y);
-        _safeMint(msg.sender, tokenId);
         tokenIdToCoordinate[tokenId] = [page, x, y];
         coordinateToTokenID[page][x][y] = tokenId;
+
+        if (unwrappedPendingTiles[page][x][y].owner != address(0)) {
+            uint256 price = unwrappedPendingTiles[page][x][y].price;
+            uint256 percent = unwrappedPendingTiles[page][x][y]
+                .mbc_rake_percent;
+            delete unwrappedPendingTiles[page][x][y];
+            (bool sent, ) = msg.sender.call{value: (price * percent) / 100}("");
+            require(sent);
+        }
+        _safeMint(msg.sender, tokenId);
     }
 
     function setHtml(
@@ -58,11 +81,39 @@ contract WrappedMyBlockchainCorner is ERC721, ERC721Burnable, Ownable {
         uint32 y,
         string calldata html
     ) external {
+        require(ownerOf(coordinateToTokenID[page][x][y]) == msg.sender);
         originalMBC.setHtml(page, x, y, html);
     }
 
     function unWrap(uint256 page, uint32 x, uint32 y, uint256 price) public {
+        require(ownerOf(coordinateToTokenID[page][x][y]) == msg.sender);
         originalMBC.setPrice(page, x, y, price);
+
+        UnwrappedPendingTile memory target;
+        target.owner = msg.sender;
+        target.price = price;
+        target.mbc_rake_percent = originalMBC.percent();
+        unwrappedPendingTiles[page][x][y] = target;
+
+        uint256 tokenId = coordinateToTokenID[page][x][y];
+        super._burn(tokenId);
+    }
+
+    function claimEthFromUnwrappedTile(
+        uint256 page,
+        uint32 x,
+        uint32 y
+    ) public {
+        (address tileOwner, , ) = originalMBC.pages(page, x, y);
+        require(tileOwner != address(this));
+
+        require(unwrappedPendingTiles[page][x][y].owner == msg.sender);
+        uint256 price = unwrappedPendingTiles[page][x][y].price;
+        uint256 percent = unwrappedPendingTiles[page][x][y].mbc_rake_percent;
+        delete unwrappedPendingTiles[page][x][y];
+
+        (bool sent, ) = msg.sender.call{value: (price * percent) / 100}("");
+        require(sent);
     }
 
     constructor() ERC721("Wrapped MyBlockchainCorner", "MBC") {}

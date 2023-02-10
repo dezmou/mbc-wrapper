@@ -42,6 +42,7 @@ const newContext = async () => {
   const mbc = new ethers.Contract(MBC, [
     `function buyTile(uint256 page,uint32 x,uint32 y,string calldata html) public payable`,
     `function pages(uint256,uint256,uint256) public view returns (address, string, uint256)`,
+    `function percent() public view returns (uint256)`,
   ], ethers.provider);
 
   return {
