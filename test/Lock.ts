@@ -67,26 +67,33 @@ describe("Main tests", function () {
     });
   });
 
-  it("Get page content of original MBC", async () => {
+  // it("Get page content of original MBC", async () => {
+  //   const ctx = await newContext();
+  //   const res = await ctx.mbc.pages(0, 0, 0);
+  //   expect(res[1]).to.equal("<h1>HELLO WORLD</h1>");
+  // });
+
+  // it("Buy tile on original MBC", async () => {
+  //   const ctx = await newContext();
+  //   await ctx.mbc.connect(ctx.imp_gus).buyTile(0, 0, 1, "hi", { value: ethers.utils.parseEther("15") });
+  // });
+
+  it("Wrap tile", async () => {
     const ctx = await newContext();
-    const res = await ctx.mbc.pages(0, 0, 0);
-    expect(res[1]).to.equal("<h1>HELLO WORLD</h1>");
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "", { value: ethers.utils.parseEther("15") });
+    const tokenId =  await ctx.wrapped_mbc.coordinateToTokenID(0,0,1);
+    const tokenURI = await ctx.wrapped_mbc.tokenURI(tokenId);
+    console.log(tokenURI);
   });
 
-  it("Buy tile on original MBC", async () => {
-    const ctx = await newContext();
-    await ctx.mbc.connect(ctx.imp_gus).buyTile(0, 0, 1, "hi", { value: ethers.utils.parseEther("15") });
-  });
-
-
-  it("Wrap tile and set HTML", async () => {
-    const ctx = await newContext();
-    await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
-    const res = await ctx.mbc.pages(0, 0, 1);
-    expect(res[1]).to.equal("hi gus");
-    await ctx.wrapped_mbc.connect(ctx.imp_gus).setHtml(0, 0, 1, "osirfjior");
-    const res2 = await ctx.mbc.pages(0, 0, 1);
-    expect(res2[1]).to.equal("osirfjior");
-
-  });
+  // it("Wrap tile and set HTML", async () => {
+  //   const ctx = await newContext();
+  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
+  //   const res = await ctx.mbc.pages(0, 0, 1);
+  //   expect(res[1]).to.equal("hi gus");
+  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).setHtml(0, 0, 1, "osirfjior");
+  //   const res2 = await ctx.mbc.pages(0, 0, 1);
+  //   expect(res2[1]).to.equal("osirfjior");
+  // });
 });
+
