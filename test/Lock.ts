@@ -61,8 +61,10 @@ describe("Main tests", function () {
   });
 
 
-  it("Chien", async () => {
+  it("Wrap tile and set HTML", async () => {
     const ctx = await newContext();
-    const res = await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0,0,1, {value : ethers.utils.parseEther("15")});
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0,0,1, {value : ethers.utils.parseEther("15")});
+    const res = await ctx.wrapped_mbc.connect(ctx.imp_gus);
+
   });
 });

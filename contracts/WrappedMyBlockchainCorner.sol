@@ -18,6 +18,16 @@ contract WrappedMyBlockchainCorner {
         originalMBC.buyTile{value : msg.value}(page, x, y, "");
     }
 
+    function setHtml(
+        uint256 page,
+        uint32 x,
+        uint32 y,
+        string calldata html
+    ) external {
+        originalMBC.setHtml(page, x, y, html);
+    }
+
+
     function unWrap(uint256 page, uint32 x, uint32 y, uint256 price) public {
         originalMBC.setPrice(page, x, y, price);
     }
