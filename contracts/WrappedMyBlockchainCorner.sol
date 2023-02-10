@@ -64,13 +64,16 @@ contract WrappedMyBlockchainCorner is
         tokenIdToCoordinate[tokenId] = [page, x, y];
         coordinateToTokenID[page][x][y] = tokenId;
 
+        // If tile was previously unwrapped without claiming eths we activate claim eth
         if (unwrappedPendingTiles[page][x][y].owner != address(0)) {
+            address previousOwner = unwrappedPendingTiles[page][x][y].owner;
             uint256 price = unwrappedPendingTiles[page][x][y].price;
             uint256 percent = unwrappedPendingTiles[page][x][y]
                 .mbc_rake_percent;
             delete unwrappedPendingTiles[page][x][y];
-            (bool sent, ) = msg.sender.call{value: (price * percent) / 100}("");
-            require(sent);
+            
+            // we does not check if ethers were sent to avoid denial of service attack
+            previousOwner.call{value: (price * percent) / 100}(""); 
         }
         _safeMint(msg.sender, tokenId);
     }
