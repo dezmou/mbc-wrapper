@@ -1,4 +1,4 @@
-# (WIP) MyBlockchainCorner ERC-721 wrapper
+# MyBlockchainCorner ERC-721 wrapper
 ## This wrapper allow you to wrap tiles of the archeological NFT https://myblockchaincorner.web.app/ to trade it on openSea
 
 ## [Contract on etherscan](https://etherscan.io/address/0x090F1C3bB97591b03772994DC8964f8758cc8391)
