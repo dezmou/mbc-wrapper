@@ -139,21 +139,76 @@ contract WrappedMyBlockchainCorner is
         uint256 tokenId
     ) public view override(ERC721) returns (string memory) {
         ownerOf(tokenId);
-        // uint256[3] memory coords = tokenIdToCoordinate[tokenId];
+        uint256[3] memory coords = tokenIdToCoordinate[tokenId];
 
-        string memory image = '<svg width="400" height="110"><rect width="300" height="100" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" /></svg>';
-        string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "chien", "description": "c le chien et tout", "image": "data:image/svg+xml;base64,', Base64.encode(bytes(image)), '"}'))));
-        return string(abi.encodePacked('data:application/json;base64,', json));
+        string
+            memory image = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="chien" width="1000" height="1000"><style>.tile {fill : #b27f33;stroke : black;shadow: 1px 1px 5px 2px #000000;opacity : 0.35;}.curTile {opacity : 1;}text {font-family: verdana;font-weight : bold;}.title { font-size: 40px;fill : #432800;}.wr {font-size: 34px;fill : #432800;}.pa {font-size: 70px;fill : #670d59;}</style><text class="title" x="10" y="45" >MY BLOCKCHAIN CORNER</text><text class="wr" x="10" y="85" >WRAPPED TILE</text><text class="pa" x="8" y="170" >PAGE ';
 
-        // return
-        //     string.concat(
-        //         "Page : ",
-        //         Strings.toString(coords[0]),
-        //         " x : ",
-        //         Strings.toString(coords[1]),
-        //         " y : ",
-        //         Strings.toString(coords[2])
-        //     );
+        image = string(abi.encodePacked(image, Strings.toString(coords[0])));
+        image = string(
+            abi.encodePacked(
+                image,
+                ' </text><g transform="translate(0,200),scale(0.98)" transform-origin="center">'
+            )
+        );
+
+        uint[] memory xCoords = new uint[](4);
+        xCoords[0] = 0;
+        xCoords[1] = 253;
+        xCoords[2] = 506;
+        xCoords[3] = 759;
+
+        uint[] memory yCoords = new uint[](4);
+        yCoords[0] = 0;
+        yCoords[1] = 183;
+        yCoords[2] = 366;
+        yCoords[3] = 549;
+
+        for (uint256 x = 0; x < 4; x++) {
+            for (uint256 y = 0; y < 4; y++) {
+                image = string(
+                    abi.encodePacked(image, '<rect rx="10" class="tile ')
+                );
+
+                if (coords[1] == y && coords[2] == x) {
+                    image = string(
+                        abi.encodePacked(
+                            image,
+                            'curTile'
+                        )
+                    );
+                }
+
+                image = string(
+                    abi.encodePacked(image, '" width="240" height="170" x="')
+                );
+
+                image = string(
+                    abi.encodePacked(image, Strings.toString(xCoords[x]))
+                );
+
+                image = string(abi.encodePacked(image, '" y="'));
+
+                image = string(
+                    abi.encodePacked(image, Strings.toString(yCoords[y]))
+                );
+
+                image = string(abi.encodePacked(image, '"></rect>'));
+            }
+        }
+
+        image = string(abi.encodePacked(image, "</g></svg>"));
+
+        return
+            string(
+                abi.encodePacked(
+                    "data:image/svg+xml;base64,",
+                    Base64.encode(bytes(image))
+                )
+            );
+
+        // string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "chien", "description": "c le chien et tout", "image": "data:image/svg+xml;base64,', Base64.encode(bytes(image)), '"}'))));
+        // return string(abi.encodePacked('data:application/json;base64,', json));
     }
 }
 

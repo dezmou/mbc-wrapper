@@ -71,8 +71,8 @@ describe("Main tests", function () {
 
   it("TokenURI test", async () => {
     const ctx = await newContext();
-    await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "", { value: ethers.utils.parseEther("15") });
-    const tokenId = await ctx.wrapped_mbc.coordinateToTokenID(0, 0, 1);
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(1, 2, 0, "", { value: ethers.utils.parseEther("2.4") });
+    const tokenId = await ctx.wrapped_mbc.coordinateToTokenID(1, 2, 0);
     const tokenURI = await ctx.wrapped_mbc.tokenURI(tokenId);
     console.log(tokenURI);
   });
@@ -121,6 +121,14 @@ describe("Main tests", function () {
   //   const tokenId = await ctx.wrapped_mbc.getTokenId(0, 0, 1);
   //   await ctx.wrapped_mbc.connect(ctx.imp_gus).transferFrom(GUS, DEZMOU, tokenId);
   //   await shouldFail(async () => await ctx.wrapped_mbc.connect(ctx.imp_gus).setHtml(0, 0, 1, "I like train"), "");
+  // });
+
+  // it("Wrap tile, transfer it, new owner should be able to set HTML", async () => {
+  //   const ctx = await newContext();
+  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
+  //   const tokenId = await ctx.wrapped_mbc.getTokenId(0, 0, 1);
+  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).transferFrom(GUS, DEZMOU, tokenId);
+  //   await ctx.wrapped_mbc.connect(ctx.imp_dezmou).setHtml(0, 0, 1, "I like train")
   // });
 
   // it("Should fail to unwrap non wrapped Tile", async () => {
