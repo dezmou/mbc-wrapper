@@ -31,7 +31,7 @@ The wrapper contract has been tested on every case and isn't vulnerable to attac
 
 ![alt text](./tests.PNG "Tests")
 
-## (WIP) On chain pictures
+## On chain pictures
 To preserve the on-chain spirit of the project, no external link (not even IPFS) will be used to display properties and image of the token on website like openSea. 
 
 All data will be generated on chain with a SVG picture showing which page and coordinate is the tile.
