@@ -17,11 +17,12 @@ contract WrappedMyBlockchainCorner is
     MyBlockchainCorner originalMBC =
         MyBlockchainCorner(0x8C051C68D9601771CE96d4c9e971985aeDE480f7);
 
-    struct Tile {
-        address owner;
-        string html;
-        uint256 price;
-    }
+    // // Original contract Tile
+    // struct Tile {
+    //     address owner;
+    //     string html;
+    //     uint256 price;
+    // }
 
     mapping(uint256 => uint256[3]) public tokenIdToCoordinate;
     mapping(uint256 => uint256[4][4]) public coordinateToTokenID;
@@ -53,6 +54,11 @@ contract WrappedMyBlockchainCorner is
         return uint(keccak256(bytes(str)));
     }
 
+    /**
+     * Wrap function
+     * Wrap a tile already for sale on the original contract
+     * Then buy it with this function to get the wrapped tile
+     */
     function wrap(
         uint256 page,
         uint32 x,
@@ -78,6 +84,9 @@ contract WrappedMyBlockchainCorner is
         _safeMint(msg.sender, tokenId);
     }
 
+    /**
+     * Set the HTML of the tile, it will affect the original contract
+     */
     function setHtml(
         uint256 page,
         uint32 x,
@@ -88,6 +97,10 @@ contract WrappedMyBlockchainCorner is
         originalMBC.setHtml(page, x, y, html);
     }
 
+    /**
+     * Unwrap your tile, this will set the tile for sale on the original contract
+     * Then you or someone else can buy it on the original contract
+     */
     function unWrap(uint256 page, uint32 x, uint32 y, uint256 price) public {
         require(ownerOf(coordinateToTokenID[page][x][y]) == msg.sender);
         originalMBC.setPrice(page, x, y, price);
@@ -102,6 +115,10 @@ contract WrappedMyBlockchainCorner is
         super._burn(tokenId);
     }
 
+    /**
+     * Once you unwraped your tile and bought it back on the original contract
+     * Claim the ETH you used to buy it back
+     */
     function claimEthFromUnwrappedTile(
         uint256 page,
         uint32 x,
