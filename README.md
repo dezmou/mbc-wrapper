@@ -1,10 +1,19 @@
 # (WIP) MyBlockchainCorner ERC-721 wrapper
+## This wrapper allow you to wrap tiles of the archeological NFT https://myblockchaincorner.web.app/ to trade it on openSea
+
+## [Contract on etherscan](https://etherscan.io/address/0x090F1C3bB97591b03772994DC8964f8758cc8391)
+## [Collection on OpenSea](https://opensea.io/collection/wrapped-myblockchaincorner)
+
 
 ## Wrapping process 
 
-First you must set your tile for sale using the original MBC website
+First you must set your tile for sale using the [original MBC website](https://myblockchaincorner.web.app/)
 
-Then you use the new contract to wrap your tile. 
+Then you use the [new contract](https://etherscan.io/address/0x090F1C3bB97591b03772994DC8964f8758cc8391#writeContract) to wrap your tile. 
+
+![alt text](./scanwrap.png "Tests")
+
+This transaction also allow you to set the HTML of your tile.
 
 Keep in mind than you must set a high price to your tile before wrapping it because some malicious user could be tempted to snipe it. 
 
@@ -15,6 +24,8 @@ But once wrapped, you can trade your tile on openSea for 0% fees.
 ## Set HTML 
 
 Once wrapped, you can set the HTML of your tile using the wrapper ERC-721 contract, the HTML will be updated on the original contract. 
+
+![alt text](./scanhtml.png "Tests")
 
 ## Unwrapping process. 
 
