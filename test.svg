@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="chien" width="1000" height="1000">
+<style>
+    .tile {
+        fill : #b27f33;
+        stroke : black;
+        shadow: 1px 1px 5px 2px #000000;
+        opacity : 0.35;
+    }
+    .curTile {
+        opacity : 1;
+    }
+    text {
+        font-family: verdana;
+        font-weight : bold;
+    }
+    .title { 
+        font-size: 40px;
+        fill : #432800;
+    }
+    .wr {
+        font-size: 34px;
+        fill : #432800;
+    }
+    .pa {
+        font-size: 70px;
+        fill : #670d59;
+    }
+</style>
+    <text  class="title" x="10" y="45" >MY BLOCKCHAIN CORNER</text>
+    <text  class="wr" x="10" y="85" >WRAPPED TILE</text>
+    <text  class="pa" x="8" y="170" >PAGE 0</text>
+<g transform="translate(0,200),scale(0.98)" transform-origin="center">
+    <rect rx="10" class="tile" width="240" height="170" x="0"></rect>
+    <rect rx="10" class="tile" width="240" height="170" x="253"></rect>
+    <rect rx="10" class="tile" width="240" height="170" x="506"></rect>
+    <rect rx="10" class="tile" width="240" height="170" x="759"></rect>
+    <rect rx="10" class="tile" width="240" height="170" y="183" x="0"></rect>
+    <rect rx="10" class="tile" width="240" height="170" y="183" x="253"></rect>
+    <rect rx="10" class="tile" width="240" height="170" y="183" x="506"></rect>
+    <rect rx="10" class="tile" width="240" height="170" y="183" x="759"></rect>
+    <rect rx="10" class="tile" width="240" height="170" y="366" x="0"></rect>
+    <rect rx="10" class="tile" width="240" height="170" y="366" x="253"></rect>
+    <rect rx="10" class="tile curTile" width="240" height="170" y="366" x="506"></rect>
+    <rect rx="10" class="tile" width="240" height="170" y="366" x="759"></rect>
+    <rect rx="10" class="tile" width="240" height="170" y="549" x="0"></rect>
+    <rect rx="10" class="tile" width="240" height="170" y="549" x="253"></rect>
+    <rect rx="10" class="tile" width="240" height="170" y="549" x="506"></rect>
+    <rect rx="10" class="tile" width="240" height="170" y="549" x="759"></rect>
+</g>
+</svg>
