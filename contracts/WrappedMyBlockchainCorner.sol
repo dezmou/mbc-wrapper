@@ -17,13 +17,6 @@ contract WrappedMyBlockchainCorner is
     MyBlockchainCorner originalMBC =
         MyBlockchainCorner(0x8C051C68D9601771CE96d4c9e971985aeDE480f7);
 
-    // // Original contract Tile
-    // struct Tile {
-    //     address owner;
-    //     string html;
-    //     uint256 price;
-    // }
-
     mapping(uint256 => uint256[3]) public tokenIdToCoordinate;
     mapping(uint256 => uint256[4][4]) public coordinateToTokenID;
 
@@ -34,6 +27,10 @@ contract WrappedMyBlockchainCorner is
     }
     mapping(uint256 => UnwrappedPendingTile[4][4])
         private unwrappedPendingTiles;
+
+    receive() external payable {}
+
+    fallback() external payable {}
 
     /**
      * ERC721 tokenID must be an uint256 but MBC tile identifier is using 3 integers.
@@ -77,9 +74,9 @@ contract WrappedMyBlockchainCorner is
             uint256 percent = unwrappedPendingTiles[page][x][y]
                 .mbc_rake_percent;
             delete unwrappedPendingTiles[page][x][y];
-            
+
             // we does not check if ethers were sent to avoid denial of service attack
-            previousOwner.call{value: (price * percent) / 100}(""); 
+            previousOwner.call{value: (price * percent) / 100}("");
         }
         _safeMint(msg.sender, tokenId);
     }
