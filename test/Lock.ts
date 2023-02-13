@@ -89,7 +89,7 @@ describe("Main tests", function () {
 
   it("Should fail to query tokenURI to non existing tile", async () => {
     const ctx = await newContext();
-    await ctx.wrapped_mbc.tokenURI(ethers.BigNumber.from("546454"));
+    await shouldFail(async () => await ctx.wrapped_mbc.tokenURI(ethers.BigNumber.from("546454")), "ERC721: invalid token ID");
   });
 
   it("Wrap tile and set HTML", async () => {
@@ -175,7 +175,6 @@ describe("Main tests", function () {
     await ctx.wrapped_mbc.connect(ctx.imp_gus).unWrap(0, 0, 1, ethers.utils.parseEther("1"));
     await ctx.mbc.connect(ctx.imp_dezmou).buyTile(0, 0, 1, "hi", { value: ethers.utils.parseEther("1") })
     const tmpGusBalance = await ethers.provider.getBalance(GUS);
-    console.log(tmpGusBalance);
     await ctx.wrapped_mbc.connect(ctx.imp_gus).claimEthFromUnwrappedTile(0, 0, 1);
     const finalGusBalance = await ethers.provider.getBalance(GUS);
     const res = ethers.utils.formatEther(finalGusBalance.sub(tmpGusBalance));
