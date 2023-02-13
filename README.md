@@ -28,6 +28,7 @@ The same caveats for the wrapping process apply here (sniping issue and 5% lose)
 
 ## Battle tested
 The wrapper contract has been tested on every case and isn't vulnerable to attacks
+
 ![alt text](./tests.PNG "Tests")
 
 ## (WIP) On chain pictures
