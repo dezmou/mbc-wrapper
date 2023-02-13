@@ -74,164 +74,175 @@ describe("Main tests", function () {
     await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(1, 2, 0, "", { value: ethers.utils.parseEther("2.4") });
     const tokenId = await ctx.wrapped_mbc.coordinateToTokenID(1, 2, 0);
     const tokenURI = await ctx.wrapped_mbc.tokenURI(tokenId);
-    console.log(tokenURI);
   });
 
-  // it("Get page content of original MBC", async () => {
-  //   const ctx = await newContext();
-  //   const res = await ctx.mbc.pages(0, 0, 0);
-  //   expect(res[1]).to.equal("<h1>HELLO WORLD</h1>");
-  // });
+  it("Get page content of original MBC", async () => {
+    const ctx = await newContext();
+    const res = await ctx.mbc.pages(0, 0, 0);
+    expect(res[1]).to.equal("<h1>HELLO WORLD</h1>");
+  });
 
-  // it("Buy tile on original MBC", async () => {
-  //   const ctx = await newContext();
-  //   await ctx.mbc.connect(ctx.imp_gus).buyTile(0, 0, 1, "hi", { value: ethers.utils.parseEther("15") });
-  // });
+  it("Buy tile on original MBC", async () => {
+    const ctx = await newContext();
+    await ctx.mbc.connect(ctx.imp_gus).buyTile(0, 0, 1, "hi", { value: ethers.utils.parseEther("15") });
+  });
 
-  // it("Wrap tile", async () => {
-  //   const ctx = await newContext();
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "", { value: ethers.utils.parseEther("15") });
-  //   const tokenId = await ctx.wrapped_mbc.coordinateToTokenID(0, 0, 1);
-  //   const tokenURI = await ctx.wrapped_mbc.tokenURI(tokenId);
-  // });
+  it("Wrap tile", async () => {
+    const ctx = await newContext();
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "", { value: ethers.utils.parseEther("15") });
+    const tokenId = await ctx.wrapped_mbc.coordinateToTokenID(0, 0, 1);
+    const tokenURI = await ctx.wrapped_mbc.tokenURI(tokenId);
+  });
 
-  // it("Should fail to query tokenURI to non existing tile", async () => {
-  //   const ctx = await newContext();
-  //   await shouldFail(async () => await ctx.wrapped_mbc.tokenURI(ethers.BigNumber.from("546454")), "ERC721: invalid token ID");
-  // });
-
-  // it("Wrap tile and set HTML", async () => {
-  //   const ctx = await newContext();
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
-  //   const res = await ctx.mbc.pages(0, 0, 1);
-  //   expect(res[1]).to.equal("hi gus");
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).setHtml(0, 0, 1, "osirfjior");
-  //   const res2 = await ctx.mbc.pages(0, 0, 1);
-  //   expect(res2[1]).to.equal("osirfjior");
-  // });
-
-  // it("Should fail to set HTML to a non owner tile", async () => {
-  //   const ctx = await newContext();
-  //   await shouldFail(async () => await ctx.wrapped_mbc.connect(ctx.imp_gus).setHtml(0, 0, 1, "I like train"), "");
-  // });
-
-  // it("Wrap tile, transfer it, should fail to set HTML", async () => {
-  //   const ctx = await newContext();
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
-  //   const tokenId = await ctx.wrapped_mbc.getTokenId(0, 0, 1);
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).transferFrom(GUS, DEZMOU, tokenId);
-  //   await shouldFail(async () => await ctx.wrapped_mbc.connect(ctx.imp_gus).setHtml(0, 0, 1, "I like train"), "");
-  // });
-
-  // it("Wrap tile, transfer it, new owner should be able to set HTML", async () => {
-  //   const ctx = await newContext();
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
-  //   const tokenId = await ctx.wrapped_mbc.getTokenId(0, 0, 1);
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).transferFrom(GUS, DEZMOU, tokenId);
-  //   await ctx.wrapped_mbc.connect(ctx.imp_dezmou).setHtml(0, 0, 1, "I like train")
-  // });
-
-  // it("Should fail to unwrap non wrapped Tile", async () => {
-  //   const ctx = await newContext();
-  //   await shouldFail(async () => await ctx.wrapped_mbc.connect(ctx.imp_gus).unWrap(0, 0, 1, ethers.utils.parseEther("15")), "");
-  // });
-
-  // it("Should fail to unwrap wrapped non-owner tile", async () => {
-  //   const ctx = await newContext();
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
-  //   await shouldFail(async () => await ctx.wrapped_mbc.connect(ctx.imp_dezmou).unWrap(0, 0, 1, ethers.utils.parseEther("15")), "");
-  // });
-
-  // it("Wrap and unwrap Tile", async () => {
-  //   const ctx = await newContext();
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).unWrap(0, 0, 1, ethers.utils.parseEther("15"));
-  // });
-
-  // it("Should fail to unwrap already unwrapped tile", async () => {
-  //   const ctx = await newContext();
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).unWrap(0, 0, 1, ethers.utils.parseEther("15"));
-  //   await shouldFail(async () => await ctx.wrapped_mbc.connect(ctx.imp_gus).unWrap(0, 0, 1, ethers.utils.parseEther("15")), "");
-  // });
+  it("Should fail to wrap tile twice", async () => {
+    const ctx = await newContext();
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "", { value: ethers.utils.parseEther("15") });
+    await shouldFail(async () =>   await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "", { value: ethers.utils.parseEther("15") }), "");
+  });
 
 
-  // it("Wrap and unwrap Tile, buy it with the original contract", async () => {
-  //   const ctx = await newContext();
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).unWrap(0, 0, 1, ethers.utils.parseEther("1"));
-  //   await ctx.mbc.connect(ctx.imp_gus).buyTile(0, 0, 1, "hi", { value: ethers.utils.parseEther("1") })
-  //   const res = await ctx.mbc.pages(0, 0, 1);
-  //   expect(res[0]).to.equal(GUS);
-  // });
+  it("Wrap non-minted Tile", async () => {
+    const ctx = await newContext();
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(485, 0, 1, "", { value: ethers.utils.parseEther("0.5") });
+  });
 
-  // it("Unwrap Tile, claim back eth used to unwrap", async () => {
-  //   const ctx = await newContext();
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).unWrap(0, 0, 1, ethers.utils.parseEther("1"));
-  //   await ctx.mbc.connect(ctx.imp_gus).buyTile(0, 0, 1, "hi", { value: ethers.utils.parseEther("1") })
-  //   const tmpGusBalance = await ethers.provider.getBalance(GUS);
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).claimEthFromUnwrappedTile(0, 0, 1);
-  //   const finalGusBalance = await ethers.provider.getBalance(GUS);
-  //   const res = ethers.utils.formatEther(finalGusBalance.sub(tmpGusBalance));
-  //   expect(res.startsWith("0.94")).to.equal(true);
-  // });
+  it("Should fail to query tokenURI to non existing tile", async () => {
+    const ctx = await newContext();
+    await shouldFail(async () => await ctx.wrapped_mbc.tokenURI(ethers.BigNumber.from("546454")), "ERC721: invalid token ID");
+  });
 
-  // it("Should fail to claim ETH from unwraped tile that aren't your", async () => {
-  //   const ctx = await newContext();
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).unWrap(0, 0, 1, ethers.utils.parseEther("1"));
-  //   await ctx.mbc.connect(ctx.imp_gus).buyTile(0, 0, 1, "hi", { value: ethers.utils.parseEther("1") })
-  //   await shouldFail(async () => await ctx.wrapped_mbc.connect(ctx.imp_dezmou).claimEthFromUnwrappedTile(0, 0, 1), "");
-  // });
+  it("Wrap tile and set HTML", async () => {
+    const ctx = await newContext();
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
+    const res = await ctx.mbc.pages(0, 0, 1);
+    expect(res[1]).to.equal("hi gus");
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).setHtml(0, 0, 1, "osirfjior");
+    const res2 = await ctx.mbc.pages(0, 0, 1);
+    expect(res2[1]).to.equal("osirfjior");
+  });
 
-  // it("Unwrap Tile,someone else buy it, last owner claim back eth used to unwrap", async () => {
-  //   const ctx = await newContext();
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).unWrap(0, 0, 1, ethers.utils.parseEther("1"));
-  //   await ctx.mbc.connect(ctx.imp_dezmou).buyTile(0, 0, 1, "hi", { value: ethers.utils.parseEther("1") })
-  //   const tmpGusBalance = await ethers.provider.getBalance(GUS);
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).claimEthFromUnwrappedTile(0, 0, 1);
-  //   const finalGusBalance = await ethers.provider.getBalance(GUS);
-  //   const res = ethers.utils.formatEther(finalGusBalance.sub(tmpGusBalance));
-  //   expect(res.startsWith("0.94")).to.equal(true);
-  // });
+  it("Should fail to set HTML to a non owner tile", async () => {
+    const ctx = await newContext();
+    await shouldFail(async () => await ctx.wrapped_mbc.connect(ctx.imp_gus).setHtml(0, 0, 1, "I like train"), "");
+  });
 
-  // it("Should fail to claim ETH from unwraping twice", async () => {
-  //   const ctx = await newContext();
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).unWrap(0, 0, 1, ethers.utils.parseEther("1"));
-  //   await ctx.mbc.connect(ctx.imp_gus).buyTile(0, 0, 1, "hi", { value: ethers.utils.parseEther("1") })
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).claimEthFromUnwrappedTile(0, 0, 1);
-  //   await shouldFail(async () => await ctx.wrapped_mbc.connect(ctx.imp_gus).claimEthFromUnwrappedTile(0, 0, 1), "");
-  // });
+  it("Wrap tile, transfer it, should fail to set HTML", async () => {
+    const ctx = await newContext();
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
+    const tokenId = await ctx.wrapped_mbc.getTokenId(0, 0, 1);
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).transferFrom(GUS, DEZMOU, tokenId);
+    await shouldFail(async () => await ctx.wrapped_mbc.connect(ctx.imp_gus).setHtml(0, 0, 1, "I like train"), "");
+  });
 
-  // it("Unwrap tile, someone else wrap it, last owner get ETH", async () => {
-  //   const ctx = await newContext();
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).unWrap(0, 0, 1, ethers.utils.parseEther("1"));
-  //   const gusBalance = await ethers.provider.getBalance(GUS);
-  //   await ctx.mbc.connect(ctx.imp_dezmou).buyTile(0, 0, 1, "soupe", { value: ethers.utils.parseEther("1") });
-  //   await ctx.mbc.connect(ctx.imp_dezmou).setPrice(0, 0, 1, ethers.utils.parseEther("2"));
-  //   await ctx.wrapped_mbc.connect(ctx.imp_dezmou).wrap(0, 0, 1, "I like train", { value: ethers.utils.parseEther("2") });
-  //   const gusBalanceAfter = await ethers.provider.getBalance(GUS);
-  //   const res = ethers.utils.formatEther(gusBalanceAfter.sub(gusBalance));
-  //   expect(res).to.equal("0.95");
-  // });
+  it("Wrap tile, transfer it, new owner should be able to set HTML", async () => {
+    const ctx = await newContext();
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
+    const tokenId = await ctx.wrapped_mbc.getTokenId(0, 0, 1);
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).transferFrom(GUS, DEZMOU, tokenId);
+    await ctx.wrapped_mbc.connect(ctx.imp_dezmou).setHtml(0, 0, 1, "I like train")
+  });
 
-  // it("Unwrap tile, someone else wrap it, last owner get ETH and cannot claim ETH anymore", async () => {
-  //   const ctx = await newContext();
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
-  //   await ctx.wrapped_mbc.connect(ctx.imp_gus).unWrap(0, 0, 1, ethers.utils.parseEther("1"));
-  //   const gusBalance = await ethers.provider.getBalance(GUS);
-  //   await ctx.mbc.connect(ctx.imp_dezmou).buyTile(0, 0, 1, "soupe", { value: ethers.utils.parseEther("1") });
-  //   await ctx.mbc.connect(ctx.imp_dezmou).setPrice(0, 0, 1, ethers.utils.parseEther("2"));
-  //   await ctx.wrapped_mbc.connect(ctx.imp_dezmou).wrap(0, 0, 1, "I like train", { value: ethers.utils.parseEther("2") });
-  //   const gusBalanceAfter = await ethers.provider.getBalance(GUS);
-  //   const res = ethers.utils.formatEther(gusBalanceAfter.sub(gusBalance));
-  //   expect(res).to.equal("0.95");
-  //   await shouldFail(async () => await ctx.wrapped_mbc.connect(ctx.imp_gus).claimEthFromUnwrappedTile(0, 0, 1), "");
-  // });
+  it("Should fail to unwrap non wrapped Tile", async () => {
+    const ctx = await newContext();
+    await shouldFail(async () => await ctx.wrapped_mbc.connect(ctx.imp_gus).unWrap(0, 0, 1, ethers.utils.parseEther("15")), "");
+  });
+
+  it("Should fail to unwrap wrapped non-owner tile", async () => {
+    const ctx = await newContext();
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
+    await shouldFail(async () => await ctx.wrapped_mbc.connect(ctx.imp_dezmou).unWrap(0, 0, 1, ethers.utils.parseEther("15")), "");
+  });
+
+  it("Wrap and unwrap Tile", async () => {
+    const ctx = await newContext();
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).unWrap(0, 0, 1, ethers.utils.parseEther("15"));
+  });
+
+  it("Should fail to unwrap already unwrapped tile", async () => {
+    const ctx = await newContext();
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).unWrap(0, 0, 1, ethers.utils.parseEther("15"));
+    await shouldFail(async () => await ctx.wrapped_mbc.connect(ctx.imp_gus).unWrap(0, 0, 1, ethers.utils.parseEther("15")), "");
+  });
+
+
+  it("Wrap and unwrap Tile, buy it with the original contract", async () => {
+    const ctx = await newContext();
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).unWrap(0, 0, 1, ethers.utils.parseEther("1"));
+    await ctx.mbc.connect(ctx.imp_gus).buyTile(0, 0, 1, "hi", { value: ethers.utils.parseEther("1") })
+    const res = await ctx.mbc.pages(0, 0, 1);
+    expect(res[0]).to.equal(GUS);
+  });
+
+  it("Unwrap Tile, claim back eth used to unwrap", async () => {
+    const ctx = await newContext();
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).unWrap(0, 0, 1, ethers.utils.parseEther("1"));
+    await ctx.mbc.connect(ctx.imp_gus).buyTile(0, 0, 1, "hi", { value: ethers.utils.parseEther("1") })
+    const tmpGusBalance = await ethers.provider.getBalance(GUS);
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).claimEthFromUnwrappedTile(0, 0, 1);
+    const finalGusBalance = await ethers.provider.getBalance(GUS);
+    const res = ethers.utils.formatEther(finalGusBalance.sub(tmpGusBalance));
+    expect(res.startsWith("0.94")).to.equal(true);
+  });
+
+  it("Should fail to claim ETH from unwraped tile that aren't your", async () => {
+    const ctx = await newContext();
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).unWrap(0, 0, 1, ethers.utils.parseEther("1"));
+    await ctx.mbc.connect(ctx.imp_gus).buyTile(0, 0, 1, "hi", { value: ethers.utils.parseEther("1") })
+    await shouldFail(async () => await ctx.wrapped_mbc.connect(ctx.imp_dezmou).claimEthFromUnwrappedTile(0, 0, 1), "");
+  });
+
+  it("Unwrap Tile,someone else buy it, last owner claim back eth used to unwrap", async () => {
+    const ctx = await newContext();
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).unWrap(0, 0, 1, ethers.utils.parseEther("1"));
+    await ctx.mbc.connect(ctx.imp_dezmou).buyTile(0, 0, 1, "hi", { value: ethers.utils.parseEther("1") })
+    const tmpGusBalance = await ethers.provider.getBalance(GUS);
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).claimEthFromUnwrappedTile(0, 0, 1);
+    const finalGusBalance = await ethers.provider.getBalance(GUS);
+    const res = ethers.utils.formatEther(finalGusBalance.sub(tmpGusBalance));
+    expect(res.startsWith("0.94")).to.equal(true);
+  });
+
+  it("Should fail to claim ETH from unwraping twice", async () => {
+    const ctx = await newContext();
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).unWrap(0, 0, 1, ethers.utils.parseEther("1"));
+    await ctx.mbc.connect(ctx.imp_gus).buyTile(0, 0, 1, "hi", { value: ethers.utils.parseEther("1") })
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).claimEthFromUnwrappedTile(0, 0, 1);
+    await shouldFail(async () => await ctx.wrapped_mbc.connect(ctx.imp_gus).claimEthFromUnwrappedTile(0, 0, 1), "");
+  });
+
+  it("Unwrap tile, someone else wrap it, last owner get ETH", async () => {
+    const ctx = await newContext();
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).unWrap(0, 0, 1, ethers.utils.parseEther("1"));
+    const gusBalance = await ethers.provider.getBalance(GUS);
+    await ctx.mbc.connect(ctx.imp_dezmou).buyTile(0, 0, 1, "soupe", { value: ethers.utils.parseEther("1") });
+    await ctx.mbc.connect(ctx.imp_dezmou).setPrice(0, 0, 1, ethers.utils.parseEther("2"));
+    await ctx.wrapped_mbc.connect(ctx.imp_dezmou).wrap(0, 0, 1, "I like train", { value: ethers.utils.parseEther("2") });
+    const gusBalanceAfter = await ethers.provider.getBalance(GUS);
+    const res = ethers.utils.formatEther(gusBalanceAfter.sub(gusBalance));
+    expect(res).to.equal("0.95");
+  });
+
+  it("Unwrap tile, someone else wrap it, last owner get ETH and cannot claim ETH anymore", async () => {
+    const ctx = await newContext();
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
+    await ctx.wrapped_mbc.connect(ctx.imp_gus).unWrap(0, 0, 1, ethers.utils.parseEther("1"));
+    const gusBalance = await ethers.provider.getBalance(GUS);
+    await ctx.mbc.connect(ctx.imp_dezmou).buyTile(0, 0, 1, "soupe", { value: ethers.utils.parseEther("1") });
+    await ctx.mbc.connect(ctx.imp_dezmou).setPrice(0, 0, 1, ethers.utils.parseEther("2"));
+    await ctx.wrapped_mbc.connect(ctx.imp_dezmou).wrap(0, 0, 1, "I like train", { value: ethers.utils.parseEther("2") });
+    const gusBalanceAfter = await ethers.provider.getBalance(GUS);
+    const res = ethers.utils.formatEther(gusBalanceAfter.sub(gusBalance));
+    expect(res).to.equal("0.95");
+    await shouldFail(async () => await ctx.wrapped_mbc.connect(ctx.imp_gus).claimEthFromUnwrappedTile(0, 0, 1), "");
+  });
 
 });
 

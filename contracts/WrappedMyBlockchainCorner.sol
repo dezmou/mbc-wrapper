@@ -199,16 +199,8 @@ contract WrappedMyBlockchainCorner is
 
         image = string(abi.encodePacked(image, "</g></svg>"));
 
-        return
-            string(
-                abi.encodePacked(
-                    "data:image/svg+xml;base64,",
-                    Base64.encode(bytes(image))
-                )
-            );
-
-        // string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "chien", "description": "c le chien et tout", "image": "data:image/svg+xml;base64,', Base64.encode(bytes(image)), '"}'))));
-        // return string(abi.encodePacked('data:application/json;base64,', json));
+        string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "MyBlockchainCorner Tile", "description": "MyBlockchainCorner display html tiles that are stored in the ethereum blockchain, which means that if you purchase one of them, it will live forever.", "attributes" : [{"display_type": "number", "trait_type": "Page", "value" : ',Strings.toString(coords[0]),'},{"display_type": "number", "trait_type": "Row", "value" : ',Strings.toString(coords[2]),'},{"display_type": "number", "trait_type": "Column", "value" : ',Strings.toString(coords[1]),'}], "image": "data:image/svg+xml;base64,', Base64.encode(bytes(image)), '"}'))));
+        return string(abi.encodePacked('data:application/json;base64,', json));
     }
 }
 

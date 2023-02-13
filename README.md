@@ -27,13 +27,15 @@ The same caveats for the wrapping process apply here (sniping issue and 5% lose)
 # Technical specs 
 
 ## Battle tested
-The wrapper contract has been tested on every case and isn't vulnerable to attacks
+The wrapper contract has been tested on every case and isn't vulnerable to attacks.
+
+Tests are done on a fork or mainNet with the real state of original MBC contract.
 
 ![alt text](./tests.PNG "Tests")
 
 ## On chain pictures
-To preserve the on-chain spirit of the project, no external link (not even IPFS) will be used to display properties and image of the token on website like openSea. 
+To preserve the on-chain spirit of the project, no external link (not even IPFS) is used to display properties and image of the token on website like openSea. 
 
-All data will be generated on chain with a SVG picture showing which page and coordinate is the tile.
+All data is generated on chain with a SVG picture showing which page and coordinate is the tile.
 
 ![alt text](./openSea.PNG "Tests")
