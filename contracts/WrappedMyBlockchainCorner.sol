@@ -138,6 +138,7 @@ contract WrappedMyBlockchainCorner is
     function tokenURI(
         uint256 tokenId
     ) public view override(ERC721) returns (string memory) {
+        require(ownerOf(tokenId) != address(0), "non existing token");
         uint256[3] memory coords = tokenIdToCoordinate[tokenId];
 
         return

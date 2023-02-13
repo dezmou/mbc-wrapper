@@ -87,6 +87,11 @@ describe("Main tests", function () {
     const tokenURI = await ctx.wrapped_mbc.tokenURI(tokenId);
   });
 
+  it("Should fail to query tokenURI to non existing tile", async () => {
+    const ctx = await newContext();
+    await ctx.wrapped_mbc.tokenURI(ethers.BigNumber.from("546454"));
+  });
+
   it("Wrap tile and set HTML", async () => {
     const ctx = await newContext();
     await ctx.wrapped_mbc.connect(ctx.imp_gus).wrap(0, 0, 1, "hi gus", { value: ethers.utils.parseEther("15") });
