@@ -40,7 +40,7 @@ The same caveats for the wrapping process apply here (sniping issue and 5% lose)
 ## Battle tested
 The wrapper contract has been tested on every case and isn't vulnerable to attacks.
 
-Tests are done on a fork or mainNet with the real state of original MBC contract.
+Tests are done on a fork of mainnet with the real state of original MBC contract.
 
 ![alt text](./tests.PNG "Tests")
 
