@@ -7,7 +7,7 @@
 
 ## Wrapping process 
 
-First you must set your tile for sale using the [original MBC website](https://myblockchaincorner.web.app/)
+First you must set your tile for sale using the [original MBC website](https://myblockchaincorner.web.app/), keep in mind that original website use wei to set the price, use [this tool](https://etherscan.io/unitconverter) to check how much wei is your price in eth
 
 Then you use the [new contract](https://etherscan.io/address/0x090F1C3bB97591b03772994DC8964f8758cc8391#writeContract) to wrap your tile. 
 
